@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- `scripts/build-app.sh` builds a universal app (Apple silicon + Intel), and `--dmg` packages it as `build/CodeCatcher-<version>.dmg`. Releases now include the DMG.
+
+### Changed
+- README: installation split into Download, Build from source and After installing, with steps for opening an app that isn't notarized.
+
 ## [1.3.0] - 2026-10-15
 
 First public release.

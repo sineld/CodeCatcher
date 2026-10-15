@@ -22,13 +22,28 @@ CodeCatcher is gratis en open source. Het is gemaakt als persoonlijk project en 
 
 ## Installatie
 
+### Downloaden
+
+1. Download het `.dmg`-bestand van de [nieuwste release](https://github.com/sineld/CodeCatcher/releases/latest). Het is een universele app voor Macs met Apple silicon en met Intel.
+2. Open de DMG en sleep CodeCatcher naar de map Programma's.
+3. De app is niet door Apple genotariseerd, dus macOS blokkeert hem de eerste keer. Probeer de app één keer te openen, ga daarna naar Systeeminstellingen → Privacy en beveiliging en klik op **Open toch**. Je kunt ook dit in Terminal uitvoeren:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Bouwen vanuit de broncode
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**Ondertekening (aanbevolen):** de toestemming voor Volledige schijftoegang is gekoppeld aan de handtekening van de app. Bij ad-hocondertekening moet je deze na elke nieuwe build opnieuw verlenen. Om dat te voorkomen, maak je eenmalig een certificaat met de naam `CodeCatcher Local` aan via Sleutelhangertoegang → Certificaatassistent → Maak een certificaat aan (identiteitstype: Zelfondertekende root, certificaattype: Codeondertekening). Het script gebruikt dat certificaat als het dit vindt. Om een ander certificaat te gebruiken: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### Na de installatie
+
 1. **Volledige schijftoegang:** Systeeminstellingen → Privacy en beveiliging → Volledige schijftoegang → CodeCatcher. Zonder deze toegang kan `~/Library/Messages/chat.db` niet worden gelezen en toont de menubalk een ⚠︎-symbool.
-2. **Ondertekening (aanbevolen):** de toestemming is gekoppeld aan de handtekening van de app. Bij ad-hocondertekening moet je deze na elke nieuwe build opnieuw verlenen. Om dat te voorkomen, maak je eenmalig een certificaat met de naam `CodeCatcher Local` aan via Sleutelhangertoegang → Certificaatassistent → Maak een certificaat aan (identiteitstype: Zelfondertekende root, certificaattype: Codeondertekening). Het script gebruikt dat certificaat als het dit vindt. Om een ander certificaat te gebruiken: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. Schakel op je iPhone deze Mac in onder Instellingen → Berichten → Stuur tekstberichten door.
+2. Schakel op je iPhone deze Mac in onder Instellingen → Berichten → Stuur tekstberichten door.
 
 ## Taal
 
@@ -88,7 +103,8 @@ GitHub Actions voert `swift test` uit bij elke push en pull request.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

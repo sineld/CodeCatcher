@@ -22,13 +22,28 @@ CodeCatcher jest darmowy i ma otwarty kod źródłowy. Powstał jako projekt oso
 
 ## Instalacja
 
+### Pobieranie
+
+1. Pobierz plik `.dmg` z [najnowszego wydania](https://github.com/sineld/CodeCatcher/releases/latest). To uniwersalna aplikacja dla Maców z Apple silicon i z procesorami Intel.
+2. Otwórz plik DMG i przeciągnij CodeCatcher do folderu Aplikacje.
+3. Aplikacja nie jest notaryzowana przez Apple, więc macOS blokuje ją przy pierwszym uruchomieniu. Spróbuj ją raz otworzyć, a następnie przejdź do Ustawienia systemowe → Prywatność i ochrona i kliknij **Otwórz mimo to**. Możesz też uruchomić w Terminalu to polecenie:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Budowanie ze źródeł
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**Podpisywanie (zalecane):** Uprawnienie Pełny dostęp do dysku jest powiązane z podpisem aplikacji. Przy podpisie ad hoc trzeba je nadawać ponownie po każdej przebudowie. Aby tego uniknąć, utwórz jednorazowo certyfikat o nazwie `CodeCatcher Local` w aplikacji Pęk kluczy → Asystent certyfikatów → Utwórz certyfikat (typ tożsamości: Samopodpisany główny, typ certyfikatu: Podpisywanie kodu). Skrypt używa go, jeśli go znajdzie. Aby użyć innego certyfikatu: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### Po instalacji
+
 1. **Pełny dostęp do dysku:** Ustawienia systemowe → Prywatność i ochrona → Pełny dostęp do dysku → CodeCatcher. Bez tego nie można odczytać `~/Library/Messages/chat.db`, a na pasku menu widoczna jest ikona ⚠︎.
-2. **Podpisywanie (zalecane):** Uprawnienie jest powiązane z podpisem aplikacji. Przy podpisie ad hoc trzeba je nadawać ponownie po każdej przebudowie. Aby tego uniknąć, utwórz jednorazowo certyfikat o nazwie `CodeCatcher Local` w aplikacji Pęk kluczy → Asystent certyfikatów → Utwórz certyfikat (typ tożsamości: Samopodpisany główny, typ certyfikatu: Podpisywanie kodu). Skrypt używa go, jeśli go znajdzie. Aby użyć innego certyfikatu: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. Na iPhonie włącz tego Maca w Ustawienia → Wiadomości → Przekazywanie wiadomości tekstowych.
+2. Na iPhonie włącz tego Maca w Ustawienia → Wiadomości → Przekazywanie wiadomości tekstowych.
 
 ## Język
 
@@ -88,7 +103,8 @@ GitHub Actions uruchamia `swift test` przy każdym pushu i pull requeście.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

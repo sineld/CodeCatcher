@@ -22,13 +22,28 @@ CodeCatcherは無料のオープンソースソフトウェアです。個人プ
 
 ## インストール
 
+### ダウンロード
+
+1. [最新リリース](https://github.com/sineld/CodeCatcher/releases/latest)から`.dmg`ファイルをダウンロードします。Appleシリコン搭載のMacとIntel搭載のMacの両方で動作するユニバーサルアプリです。
+2. DMGを開き、CodeCatcherをアプリケーションフォルダにドラッグします。
+3. このアプリはAppleの公証を受けていないため、初回はmacOSによってブロックされます。一度開こうとしてから、システム設定 → プライバシーとセキュリティ に移動して**このまま開く**をクリックしてください。または、ターミナルで次のコマンドを実行します：
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### ソースからビルド
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**署名（推奨）：** フルディスクアクセスの権限はアプリの署名に紐づいています。アドホック署名では、再ビルドのたびに権限を付与し直す必要があります。これを避けるには、キーチェーンアクセス → 証明書アシスタント → 証明書を作成 で、`CodeCatcher Local`という名前の証明書を一度だけ作成してください（固有情報のタイプ：自己署名ルート、証明書のタイプ：コード署名）。スクリプトはこの証明書が見つかれば使用します。別の証明書を使うには：`CODESIGN_IDENTITY="…" scripts/build-app.sh`。
+
+### インストール後
+
 1. **フルディスクアクセス：** システム設定 → プライバシーとセキュリティ → フルディスクアクセス → CodeCatcher。これがないと`~/Library/Messages/chat.db`を読み込めず、メニューバーに⚠︎アイコンが表示されます。
-2. **署名（推奨）：** 権限はアプリの署名に紐づいています。アドホック署名では、再ビルドのたびに権限を付与し直す必要があります。これを避けるには、キーチェーンアクセス → 証明書アシスタント → 証明書を作成 で、`CodeCatcher Local`という名前の証明書を一度だけ作成してください（固有情報のタイプ：自己署名ルート、証明書のタイプ：コード署名）。スクリプトはこの証明書が見つかれば使用します。別の証明書を使うには：`CODESIGN_IDENTITY="…" scripts/build-app.sh`。
-3. iPhoneで、設定 → メッセージ → SMS/MMS転送 でこのMacをオンにします。
+2. iPhoneで、設定 → メッセージ → SMS/MMS転送 でこのMacをオンにします。
 
 ## 言語
 
@@ -88,7 +103,8 @@ GitHub Actionsは、プッシュとプルリクエストのたびに`swift test`
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

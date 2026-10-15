@@ -22,13 +22,28 @@ CodeCatcher pulsuz və açıq mənbəlidir. Şəxsi layihə kimi hazırlanıb v�
 
 ## Quraşdırma
 
+### Endirmə
+
+1. `.dmg` faylını [son buraxılışdan](https://github.com/sineld/CodeCatcher/releases/latest) endirin. Bu, həm Apple silicon, həm də Intel prosessorlu Mac-lər üçün universal tətbiqdir.
+2. DMG-ni açın və CodeCatcher-i Tətbiqlər (Applications) qovluğuna sürükləyin.
+3. Tətbiq Apple tərəfindən notarizasiya olunmayıb, buna görə macOS onu ilk dəfə bloklayır. Onu bir dəfə açmağa çalışın, sonra Sistem Ayarları (System Settings) → Məxfilik və Təhlükəsizlik (Privacy & Security) bölməsinə keçin və **Yenə də aç** (Open Anyway) düyməsini klikləyin. Alternativ olaraq Terminal-da bunu işə salın:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Mənbə kodundan qurma
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**İmzalama (tövsiyə olunur):** Tam Disk Girişi (Full Disk Access) icazəsi tətbiqin imzasına bağlıdır. Ad-hoc imza ilə hər yenidən qurmadan sonra icazəni təkrar verməli olursunuz. Bunun qarşısını almaq üçün bir dəfə Keychain Access → Certificate Assistant → Create a Certificate yolu ilə `CodeCatcher Local` adlı sertifikat yaradın (identifikasiya növü: Self-Signed Root, sertifikat növü: Code Signing). Skript onu tapdıqda istifadə edir. Başqa sertifikatdan istifadə etmək üçün: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### Quraşdırmadan sonra
+
 1. **Tam Disk Girişi:** Sistem Ayarları (System Settings) → Məxfilik və Təhlükəsizlik (Privacy & Security) → Tam Disk Girişi (Full Disk Access) → CodeCatcher. Bu icazə olmadan `~/Library/Messages/chat.db` oxuna bilmir və menyu sətrində ⚠︎ işarəsi göstərilir.
-2. **İmzalama (tövsiyə olunur):** İcazə tətbiqin imzasına bağlıdır. Ad-hoc imza ilə hər yenidən qurmadan sonra icazəni təkrar verməli olursunuz. Bunun qarşısını almaq üçün bir dəfə Keychain Access → Certificate Assistant → Create a Certificate yolu ilə `CodeCatcher Local` adlı sertifikat yaradın (identifikasiya növü: Self-Signed Root, sertifikat növü: Code Signing). Skript onu tapdıqda istifadə edir. Başqa sertifikatdan istifadə etmək üçün: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. iPhone-da Ayarlar (Settings) → Mesajlar (Messages) → Mətn Mesajlarının Yönləndirilməsi (Text Message Forwarding) bölməsində bu Mac-i aktiv edin.
+2. iPhone-da Ayarlar (Settings) → Mesajlar (Messages) → Mətn Mesajlarının Yönləndirilməsi (Text Message Forwarding) bölməsində bu Mac-i aktiv edin.
 
 ## Dil
 
@@ -88,7 +103,8 @@ GitHub Actions hər push və pull request zamanı `swift test` işə salır.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

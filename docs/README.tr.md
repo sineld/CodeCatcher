@@ -22,13 +22,28 @@ CodeCatcher ücretsiz ve açık kaynaktır. Kişisel bir proje olarak geliştiri
 
 ## Kurulum
 
+### İndirme
+
+1. `.dmg` dosyasını [son sürümden](https://github.com/sineld/CodeCatcher/releases/latest) indir. Hem Apple Silicon hem de Intel işlemcili Mac'lerde çalışan evrensel bir uygulamadır.
+2. DMG'yi aç ve CodeCatcher'ı Uygulamalar klasörüne sürükle.
+3. Uygulama Apple tarafından onaylanmadığı (notarize edilmediği) için macOS ilk açılışta onu engeller. Uygulamayı bir kez açmayı dene, ardından Sistem Ayarları → Gizlilik ve Güvenlik bölümüne gidip **Yine de Aç** düğmesine tıkla. Alternatif olarak Terminal'de şunu çalıştır:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Kaynaktan derleme
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**İmza (önerilir):** Tam Disk Erişimi izni, uygulamanın imzasına bağlıdır. Ad-hoc imzada her yeniden derlemeden sonra izni tekrar vermen gerekir. Bunu önlemek için Anahtar Zinciri Erişimi → Sertifika Asistanı → Sertifika Oluştur yolundan bir kez `CodeCatcher Local` adlı bir sertifika oluştur (kimlik türü: Kendinden İmzalı Kök, sertifika türü: Kod İmzalama). Betik bu sertifikayı bulursa onu kullanır. Başka bir sertifika kullanmak için: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### Kurulumdan sonra
+
 1. **Tam Disk Erişimi:** Sistem Ayarları → Gizlilik ve Güvenlik → Tam Disk Erişimi → CodeCatcher. Bu izin olmadan `~/Library/Messages/chat.db` okunamaz ve menü çubuğunda ⚠︎ ikonu görünür.
-2. **İmza (önerilir):** İzin, uygulamanın imzasına bağlıdır. Ad-hoc imzada her yeniden derlemeden sonra izni tekrar vermen gerekir. Bunu önlemek için Anahtar Zinciri Erişimi → Sertifika Asistanı → Sertifika Oluştur yolundan bir kez `CodeCatcher Local` adlı bir sertifika oluştur (kimlik türü: Kendinden İmzalı Kök, sertifika türü: Kod İmzalama). Betik bu sertifikayı bulursa onu kullanır. Başka bir sertifika kullanmak için: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. iPhone'da Ayarlar → Mesajlar → Metin Mesajı Yönlendirme bölümünden bu Mac'i aç.
+2. iPhone'da Ayarlar → Mesajlar → Metin Mesajı Yönlendirme bölümünden bu Mac'i aç.
 
 ## Dil
 
@@ -88,7 +103,8 @@ Her push ve pull request'te GitHub Actions `swift test` çalıştırır.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

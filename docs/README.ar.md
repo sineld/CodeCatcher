@@ -22,13 +22,28 @@ CodeCatcher مجاني ومفتوح المصدر. طُوِّر كمشروع شخ
 
 ## التثبيت
 
+### التنزيل
+
+1. نزّل ملف `.dmg` من [أحدث إصدار](https://github.com/sineld/CodeCatcher/releases/latest). إنه تطبيق عام (Universal) يعمل على أجهزة Mac بشريحة Apple silicon وأجهزة Mac بمعالج Intel.
+2. افتح ملف DMG واسحب CodeCatcher إلى مجلد التطبيقات.
+3. التطبيق غير موثَّق (notarized) من Apple، لذلك يحظره macOS في المرة الأولى. حاول فتحه مرة واحدة، ثم انتقل إلى إعدادات النظام ← الخصوصية والأمن وانقر على **فتح على أي حال**. أو بدلًا من ذلك، شغّل هذا الأمر في تطبيق الطرفية:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### البناء من المصدر
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**التوقيع (موصى به):** يرتبط إذن الوصول الكامل إلى القرص بتوقيع التطبيق. مع التوقيع المخصص (ad-hoc) عليك منح الإذن من جديد بعد كل إعادة بناء. لتجنّب ذلك، أنشئ مرة واحدة شهادة باسم `CodeCatcher Local` من الوصول إلى سلسلة المفاتيح ← مساعد الشهادة ← إنشاء شهادة (نوع الهوية: جذر موقَّع ذاتيًا، نوع الشهادة: توقيع الرمز). يستخدمها السكربت عندما يجدها. لاستخدام شهادة أخرى: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### بعد التثبيت
+
 1. **الوصول الكامل إلى القرص:** إعدادات النظام ← الخصوصية والأمن ← الوصول الكامل إلى القرص ← CodeCatcher. بدونه لا يمكن قراءة `~/Library/Messages/chat.db`، ويعرض شريط القوائم أيقونة ⚠︎.
-2. **التوقيع (موصى به):** يرتبط الإذن بتوقيع التطبيق. مع التوقيع المخصص (ad-hoc) عليك منح الإذن من جديد بعد كل إعادة بناء. لتجنّب ذلك، أنشئ مرة واحدة شهادة باسم `CodeCatcher Local` من الوصول إلى سلسلة المفاتيح ← مساعد الشهادة ← إنشاء شهادة (نوع الهوية: جذر موقَّع ذاتيًا، نوع الشهادة: توقيع الرمز). يستخدمها السكربت عندما يجدها. لاستخدام شهادة أخرى: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. على iPhone، فعّل جهاز Mac هذا من الإعدادات ← الرسائل ← إعادة توجيه الرسائل النصية.
+2. على iPhone، فعّل جهاز Mac هذا من الإعدادات ← الرسائل ← إعادة توجيه الرسائل النصية.
 
 ## اللغة
 
@@ -88,7 +103,8 @@ scripts/build-app.sh --install   # builds, installs to ~/Applications and launch
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

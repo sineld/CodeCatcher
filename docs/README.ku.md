@@ -22,13 +22,28 @@ CodeCatcher belaş û çavkaniya vekirî ye. Wekî projeyeke kesane hatiye çêk
 
 ## Sazkirin
 
+### Daxistin
+
+1. Pelê `.dmg` ji [weşana herî dawî](https://github.com/sineld/CodeCatcher/releases/latest) daxe. Ew sepaneke gerdûnî (universal) ye, hem ji bo Mac’ên bi Apple silicon û hem jî ji bo Mac’ên bi Intel.
+2. DMG’ê veke û CodeCatcher bikişîne peldanka Applications.
+3. Sepan ji aliyê Apple ve nehatiye notarîzekirin (notarized), ji ber vê yekê macOS cara yekem wê asteng dike. Carekê hewl bide ku wê vekî, paşê here Mîhengên Pergalê (System Settings) → Nepenî û Ewlehî (Privacy & Security) û li **Dîsa jî Veke** (Open Anyway) bitikîne. Wekî din, tu dikarî vê fermanê di Termînalê de bixebitînî:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Ji koda çavkaniyê avakirin
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**Îmzekirin (tê pêşniyarkirin):** Destûra Gihîştina Tevahiya Dîskê bi îmzeya sepanê ve girêdayî ye. Bi îmzekirina ad-hoc divê tu piştî her avakirineke nû destûrê dîsa bidî. Ji bo ku ev neqewime, carekê di Keychain Access → Certificate Assistant → Create a Certificate de sertîfîkayeke bi navê `CodeCatcher Local` çêke (identity type: Self-Signed Root, certificate type: Code Signing). Skrîpt dema ku wê bibîne, wê bi kar tîne. Ji bo bikaranîna sertîfîkayeke din: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### Piştî sazkirinê
+
 1. **Gihîştina Tevahiya Dîskê:** Mîhengên Pergalê (System Settings) → Nepenî û Ewlehî (Privacy & Security) → Gihîştina Tevahiya Dîskê (Full Disk Access) → CodeCatcher. Bêyî wê `~/Library/Messages/chat.db` nayê xwendin, û di darika menuyê de nîşaneya ⚠︎ xuya dike.
-2. **Îmzekirin (tê pêşniyarkirin):** Destûr bi îmzeya sepanê ve girêdayî ye. Bi îmzekirina ad-hoc divê tu piştî her avakirineke nû destûrê dîsa bidî. Ji bo ku ev neqewime, carekê di Keychain Access → Certificate Assistant → Create a Certificate de sertîfîkayeke bi navê `CodeCatcher Local` çêke (identity type: Self-Signed Root, certificate type: Code Signing). Skrîpt dema ku wê bibîne, wê bi kar tîne. Ji bo bikaranîna sertîfîkayeke din: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. Li ser iPhone’a xwe, di bin Mîheng (Settings) → Peyam (Messages) → Veguhastina Peyamên Nivîsê (Text Message Forwarding) de vê Mac’ê vêxe.
+2. Li ser iPhone’a xwe, di bin Mîheng (Settings) → Peyam (Messages) → Veguhastina Peyamên Nivîsê (Text Message Forwarding) de vê Mac’ê vêxe.
 
 ## Ziman
 
@@ -88,7 +103,8 @@ GitHub Actions di her push û pull request de `swift test` dixebitîne.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

@@ -22,13 +22,28 @@ CodeCatcher is free and open source. It was built as a personal project and is p
 
 ## Installation
 
+### Download
+
+1. Download the `.dmg` file from the [latest release](https://github.com/sineld/CodeCatcher/releases/latest). It is a universal app for both Apple silicon and Intel Macs.
+2. Open the DMG and drag CodeCatcher to the Applications folder.
+3. The app is not notarized by Apple, so macOS blocks it the first time. Try to open it once, then go to System Settings → Privacy & Security and click **Open Anyway**. Alternatively, run this in Terminal:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Build from source
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**Signing (recommended):** The Full Disk Access permission is tied to the app's signature. With ad-hoc signing you have to grant it again after every rebuild. To avoid that, create a certificate named `CodeCatcher Local` once in Keychain Access → Certificate Assistant → Create a Certificate (identity type: Self-Signed Root, certificate type: Code Signing). The script uses it when it finds it. To use another certificate: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### After installing
+
 1. **Full Disk Access:** System Settings → Privacy & Security → Full Disk Access → CodeCatcher. Without it `~/Library/Messages/chat.db` can't be read, and the menu bar shows a ⚠︎ icon.
-2. **Signing (recommended):** The permission is tied to the app's signature. With ad-hoc signing you have to grant it again after every rebuild. To avoid that, create a certificate named `CodeCatcher Local` once in Keychain Access → Certificate Assistant → Create a Certificate (identity type: Self-Signed Root, certificate type: Code Signing). The script uses it when it finds it. To use another certificate: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. On your iPhone, turn on this Mac under Settings → Messages → Text Message Forwarding.
+2. On your iPhone, turn on this Mac under Settings → Messages → Text Message Forwarding.
 
 ## Language
 
@@ -88,7 +103,8 @@ GitHub Actions runs `swift test` on every push and pull request.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

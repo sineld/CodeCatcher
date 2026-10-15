@@ -1,14 +1,18 @@
 #!/bin/bash
-# Kullanım: scripts/build-app.sh [--install]
-# build/CodeCatcher.app üretir; --install ile ~/Applications'a kopyalayıp başlatır.
+# Kullanım: scripts/build-app.sh [--install | --dmg]
+# build/CodeCatcher.app üretir (Apple silicon + Intel, universal).
+#   --install  ~/Applications'a kopyalayıp başlatır
+#   --dmg      sürüm için build/CodeCatcher-<sürüm>.dmg üretir
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-swift build -c release
+ARCHS=(--arch arm64 --arch x86_64)
+swift build -c release "${ARCHS[@]}"
+BIN="$(swift build -c release "${ARCHS[@]}" --show-bin-path)/CodeCatcher"
 APP=build/CodeCatcher.app
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp .build/release/CodeCatcher "$APP/Contents/MacOS/"
+cp "$BIN" "$APP/Contents/MacOS/"
 cp Resources/Info.plist "$APP/Contents/"
 cp Resources/AppIcon.icns "$APP/Contents/Resources/" # scripts/make-icon.swift üretir
 cp -R Resources/Localizations/*.lproj "$APP/Contents/Resources/"
@@ -21,13 +25,26 @@ else
     echo "uyarı: '$IDENTITY' sertifikası yok, ad-hoc imzalanıyor" >&2
     codesign --force --sign - "$APP"
 fi
-echo "hazır: $APP"
+echo "hazır: $APP ($(lipo -archs "$APP/Contents/MacOS/CodeCatcher"))"
 
-if [[ "${1:-}" == "--install" ]]; then
+case "${1:-}" in
+--install)
     pkill -x CodeCatcher || true
     while pgrep -x CodeCatcher >/dev/null; do sleep 0.2; done
     rm -rf ~/Applications/CodeCatcher.app
     cp -R "$APP" ~/Applications/
     for _ in 1 2 3; do open ~/Applications/CodeCatcher.app && break; sleep 1; done # LaunchServices bazen -600 verir
     echo "kuruldu: ~/Applications/CodeCatcher.app"
-fi
+    ;;
+--dmg)
+    VERSION=$(plutil -extract CFBundleShortVersionString raw Resources/Info.plist)
+    DMG="build/CodeCatcher-$VERSION.dmg"
+    STAGE=$(mktemp -d)
+    trap 'rm -rf "$STAGE"' EXIT
+    cp -R "$APP" "$STAGE/"
+    ln -s /Applications "$STAGE/Applications" # sürükle-bırak kurulum
+    rm -f "$DMG"
+    hdiutil create -volname CodeCatcher -srcfolder "$STAGE" -format UDZO -ov "$DMG" >/dev/null
+    echo "hazır: $DMG (sha256 $(shasum -a 256 "$DMG" | cut -d' ' -f1))"
+    ;;
+esac

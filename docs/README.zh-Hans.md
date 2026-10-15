@@ -22,13 +22,28 @@ CodeCatcher 免费且开源。它作为个人项目开发，按原样提供，�
 
 ## 安装
 
+### 下载
+
+1. 从[最新版本](https://github.com/sineld/CodeCatcher/releases/latest)下载 `.dmg` 文件。这是一个通用 App，同时支持搭载 Apple 芯片和 Intel 处理器的 Mac。
+2. 打开 DMG，将 CodeCatcher 拖到应用程序文件夹。
+3. 此 App 未经过 Apple 公证，因此 macOS 会在首次打开时阻止它。请先尝试打开一次，然后前往系统设置 → 隐私与安全性，点按**仍要打开**。也可以在终端中运行：
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### 从源代码构建
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**签名（推荐）：** 完全磁盘访问权限与 App 的签名绑定。使用临时（ad-hoc）签名时，每次重新构建后都必须重新授予权限。为避免这种情况，请在钥匙串访问 → 证书助理 → 创建证书中，一次性创建一个名为 `CodeCatcher Local` 的证书（身份类型：自签名根证书，证书类型：代码签名）。脚本找到该证书时就会使用它。要使用其他证书：`CODESIGN_IDENTITY="…" scripts/build-app.sh`。
+
+### 安装之后
+
 1. **完全磁盘访问权限：** 系统设置 → 隐私与安全性 → 完全磁盘访问权限 → CodeCatcher。没有此权限就无法读取 `~/Library/Messages/chat.db`，菜单栏会显示 ⚠︎ 图标。
-2. **签名（推荐）：** 该权限与 App 的签名绑定。使用临时（ad-hoc）签名时，每次重新构建后都必须重新授予权限。为避免这种情况，请在钥匙串访问 → 证书助理 → 创建证书中，一次性创建一个名为 `CodeCatcher Local` 的证书（身份类型：自签名根证书，证书类型：代码签名）。脚本找到该证书时就会使用它。要使用其他证书：`CODESIGN_IDENTITY="…" scripts/build-app.sh`。
-3. 在 iPhone 上，前往设置 → 信息 → 短信转发，开启这台 Mac。
+2. 在 iPhone 上，前往设置 → 信息 → 短信转发，开启这台 Mac。
 
 ## 语言
 
@@ -88,7 +103,8 @@ GitHub Actions 会在每次推送和拉取请求时运行 `swift test`。
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

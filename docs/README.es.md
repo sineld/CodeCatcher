@@ -22,13 +22,28 @@ CodeCatcher es gratuito y de código abierto. Se creó como proyecto personal y 
 
 ## Instalación
 
+### Descarga
+
+1. Descarga el archivo `.dmg` desde la [última versión](https://github.com/sineld/CodeCatcher/releases/latest). Es una app universal para Mac con Apple silicon y con Intel.
+2. Abre el DMG y arrastra CodeCatcher a la carpeta Aplicaciones.
+3. La app no está notarizada por Apple, así que macOS la bloquea la primera vez. Intenta abrirla una vez y luego ve a Ajustes del Sistema → Privacidad y seguridad y haz clic en **Abrir igualmente**. Como alternativa, ejecuta esto en Terminal:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Compilar desde el código fuente
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**Firma (recomendado):** El permiso de Acceso total al disco está ligado a la firma de la app. Con una firma ad hoc tienes que volver a concederlo después de cada recompilación. Para evitarlo, crea una sola vez un certificado llamado `CodeCatcher Local` en Acceso a Llaveros → Asistente para certificados → Crear un certificado (tipo de identidad: Raíz autofirmada, tipo de certificado: Firma de código). El script lo usa cuando lo encuentra. Para usar otro certificado: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### Después de instalar
+
 1. **Acceso total al disco:** Ajustes del Sistema → Privacidad y seguridad → Acceso total al disco → CodeCatcher. Sin él no se puede leer `~/Library/Messages/chat.db` y la barra de menús muestra un icono ⚠︎.
-2. **Firma (recomendado):** El permiso está ligado a la firma de la app. Con una firma ad hoc tienes que volver a concederlo después de cada recompilación. Para evitarlo, crea una sola vez un certificado llamado `CodeCatcher Local` en Acceso a Llaveros → Asistente para certificados → Crear un certificado (tipo de identidad: Raíz autofirmada, tipo de certificado: Firma de código). El script lo usa cuando lo encuentra. Para usar otro certificado: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. En tu iPhone, activa este Mac en Ajustes → Mensajes → Reenvío de mensajes de texto.
+2. En tu iPhone, activa este Mac en Ajustes → Mensajes → Reenvío de mensajes de texto.
 
 ## Idioma
 
@@ -88,7 +103,8 @@ GitHub Actions ejecuta `swift test` en cada push y pull request.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

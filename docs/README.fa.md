@@ -22,13 +22,28 @@ CodeCatcher رایگان و متن‌باز است. به‌عنوان یک پر�
 
 ## نصب
 
+### دانلود
+
+1. فایل `.dmg` را از [آخرین نسخهٔ منتشرشده](https://github.com/sineld/CodeCatcher/releases/latest) دانلود کنید. این یک برنامهٔ universal است که هم روی Macهای Apple silicon و هم روی Macهای Intel اجرا می‌شود.
+2. فایل DMG را باز کنید و CodeCatcher را به پوشهٔ Applications بکشید.
+3. این برنامه از سوی Apple تأیید (notarize) نشده است، بنابراین macOS بار اول جلوی اجرای آن را می‌گیرد. یک بار برای باز کردن آن تلاش کنید، سپس به تنظیمات سیستم ← حریم خصوصی و امنیت (در macOS انگلیسی: System Settings → Privacy & Security) بروید و روی **به هر حال باز شود** (Open Anyway) کلیک کنید. همچنین می‌توانید این دستور را در ترمینال اجرا کنید:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### ساخت از کد منبع
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**امضا (توصیه می‌شود):** مجوز دسترسی کامل به دیسک به امضای برنامه وابسته است. با امضای ad-hoc باید پس از هر بار ساخت دوباره آن را بدهید. برای جلوگیری از این کار، یک بار در Keychain Access → Certificate Assistant → Create a Certificate گواهی‌ای با نام `CodeCatcher Local` بسازید (identity type: Self-Signed Root, certificate type: Code Signing). اسکریپت اگر آن را پیدا کند از آن استفاده می‌کند. برای استفاده از گواهی دیگر: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### پس از نصب
+
 1. **دسترسی کامل به دیسک:** تنظیمات سیستم ← حریم خصوصی و امنیت ← دسترسی کامل به دیسک ← CodeCatcher (در macOS انگلیسی: System Settings → Privacy & Security → Full Disk Access). بدون آن `~/Library/Messages/chat.db` خوانده نمی‌شود و در نوار منو نماد ⚠︎ نمایش داده می‌شود.
-2. **امضا (توصیه می‌شود):** این مجوز به امضای برنامه وابسته است. با امضای ad-hoc باید پس از هر بار ساخت دوباره آن را بدهید. برای جلوگیری از این کار، یک بار در Keychain Access → Certificate Assistant → Create a Certificate گواهی‌ای با نام `CodeCatcher Local` بسازید (identity type: Self-Signed Root, certificate type: Code Signing). اسکریپت اگر آن را پیدا کند از آن استفاده می‌کند. برای استفاده از گواهی دیگر: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. روی iPhone خود، در تنظیمات ← پیام‌ها ← بازارسال پیامک (در iOS انگلیسی: Settings → Messages → Text Message Forwarding) این Mac را روشن کنید.
+2. روی iPhone خود، در تنظیمات ← پیام‌ها ← بازارسال پیامک (در iOS انگلیسی: Settings → Messages → Text Message Forwarding) این Mac را روشن کنید.
 
 ## زبان
 
@@ -88,7 +103,8 @@ GitHub Actions در هر push و pull request، `swift test` را اجرا می�
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

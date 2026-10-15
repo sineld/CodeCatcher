@@ -22,13 +22,28 @@ CodeCatcher est gratuit et open source. Il a été conçu comme un projet person
 
 ## Installation
 
+### Téléchargement
+
+1. Téléchargez le fichier `.dmg` depuis la [dernière version](https://github.com/sineld/CodeCatcher/releases/latest). Il s’agit d’une app universelle pour les Mac avec puce Apple et les Mac Intel.
+2. Ouvrez le DMG et faites glisser CodeCatcher dans le dossier Applications.
+3. L’app n’est pas notarisée par Apple, donc macOS la bloque la première fois. Essayez de l’ouvrir une fois, puis allez dans Réglages Système → Confidentialité et sécurité et cliquez sur **Ouvrir quand même**. Vous pouvez aussi exécuter ceci dans Terminal :
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### Compiler à partir des sources
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**Signature (recommandée) :** l’autorisation Accès complet au disque est liée à la signature de l’app. Avec une signature ad hoc, vous devez l’accorder à nouveau après chaque recompilation. Pour l’éviter, créez une fois pour toutes un certificat nommé `CodeCatcher Local` dans Trousseau d’accès → Assistant de certification → Créer un certificat (type d’identité : Racine auto-signée, type de certificat : Signature de code). Le script l’utilise s’il le trouve. Pour utiliser un autre certificat : `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### Après l’installation
+
 1. **Accès complet au disque :** Réglages Système → Confidentialité et sécurité → Accès complet au disque → CodeCatcher. Sans cet accès, `~/Library/Messages/chat.db` ne peut pas être lu et la barre des menus affiche une icône ⚠︎.
-2. **Signature (recommandée) :** l’autorisation est liée à la signature de l’app. Avec une signature ad hoc, vous devez l’accorder à nouveau après chaque recompilation. Pour l’éviter, créez une fois pour toutes un certificat nommé `CodeCatcher Local` dans Trousseau d’accès → Assistant de certification → Créer un certificat (type d’identité : Racine auto-signée, type de certificat : Signature de code). Le script l’utilise s’il le trouve. Pour utiliser un autre certificat : `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. Sur votre iPhone, activez ce Mac dans Réglages → Messages → Transfert de SMS.
+2. Sur votre iPhone, activez ce Mac dans Réglages → Messages → Transfert de SMS.
 
 ## Langue
 
@@ -88,7 +103,8 @@ GitHub Actions exécute `swift test` à chaque push et pull request.
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 

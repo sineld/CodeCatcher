@@ -22,13 +22,28 @@ CodeCatcher는 무료 오픈 소스입니다. 개인 프로젝트로 만들어�
 
 ## 설치
 
+### 다운로드
+
+1. [최신 릴리스](https://github.com/sineld/CodeCatcher/releases/latest)에서 `.dmg` 파일을 다운로드합니다. Apple 실리콘 Mac과 Intel Mac 모두에서 작동하는 유니버설 앱입니다.
+2. DMG를 열고 CodeCatcher를 응용 프로그램 폴더로 드래그합니다.
+3. 이 앱은 Apple의 공증을 받지 않았기 때문에 처음 실행할 때 macOS가 차단합니다. 한 번 열어 본 다음 시스템 설정 → 개인정보 보호 및 보안으로 이동하여 **그래도 열기**를 클릭합니다. 또는 터미널에서 다음 명령을 실행합니다:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
+   ```
+
+### 소스에서 빌드
+
 ```bash
 scripts/build-app.sh --install   # builds, installs to ~/Applications and launches
 ```
 
+**서명(권장):** 전체 디스크 접근 권한은 앱의 서명에 연결됩니다. 애드혹 서명을 사용하면 다시 빌드할 때마다 권한을 다시 부여해야 합니다. 이를 피하려면 키체인 접근 → 인증서 지원 → 인증서 생성에서 `CodeCatcher Local`이라는 이름의 인증서를 한 번 만드십시오(신원 유형: 자체 서명 루트, 인증서 유형: 코드 서명). 스크립트는 이 인증서를 찾으면 사용합니다. 다른 인증서를 사용하려면: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
+
+### 설치 후
+
 1. **전체 디스크 접근 권한:** 시스템 설정 → 개인정보 보호 및 보안 → 전체 디스크 접근 권한 → CodeCatcher. 이 권한이 없으면 `~/Library/Messages/chat.db`를 읽을 수 없으며 메뉴 막대에 ⚠︎ 아이콘이 표시됩니다.
-2. **서명(권장):** 권한은 앱의 서명에 연결됩니다. 애드혹 서명을 사용하면 다시 빌드할 때마다 권한을 다시 부여해야 합니다. 이를 피하려면 키체인 접근 → 인증서 지원 → 인증서 생성에서 `CodeCatcher Local`이라는 이름의 인증서를 한 번 만드십시오(신원 유형: 자체 서명 루트, 인증서 유형: 코드 서명). 스크립트는 이 인증서를 찾으면 사용합니다. 다른 인증서를 사용하려면: `CODESIGN_IDENTITY="…" scripts/build-app.sh`.
-3. iPhone의 설정 → 메시지 → 문자 메시지 전달에서 이 Mac을 켭니다.
+2. iPhone의 설정 → 메시지 → 문자 메시지 전달에서 이 Mac을 켭니다.
 
 ## 언어
 
@@ -88,7 +103,8 @@ GitHub Actions는 모든 푸시와 풀 리퀘스트에서 `swift test`를 실행
 
 ```bash
 swift test                          # tests
-scripts/build-app.sh                # build/CodeCatcher.app
+scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
+scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
 ```
 
