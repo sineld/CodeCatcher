@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>tr</string>
+		<string>de</string>
+		<string>es</string>
+		<string>fr</string>
+		<string>it</string>
+		<string>pt-BR</string>
+		<string>nl</string>
+		<string>pl</string>
+		<string>ru</string>
+		<string>uk</string>
+		<string>ku</string>
+		<string>az</string>
+		<string>ar</string>
+		<string>fa</string>
+		<string>zh-Hans</string>
+		<string>ja</string>
+		<string>ko</string>
+	</array>
+	<key>CFBundleIdentifier</key>
+	<string>tr.sinaneldem.CodeCatcher</string>
+	<key>CFBundleName</key>
+	<string>CodeCatcher</string>
+	<key>CFBundleDisplayName</key>
+	<string>CodeCatcher</string>
+	<key>CFBundleExecutable</key>
+	<string>CodeCatcher</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.3</string>
+	<key>CFBundleVersion</key>
+	<string>4</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2026 Sinan Eldem</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>15.0</string>
+	<key>LSUIElement</key>
+	<true/>
+</dict>
+</plist>
