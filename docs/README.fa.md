@@ -20,6 +20,16 @@ CodeCatcher رایگان و متن‌باز است. به‌عنوان یک پر�
 
 **پیش‌نیازها:** macOS 15 یا جدیدتر، Xcode 16 یا جدیدتر برای ساخت، و قابلیت بازارسال پیامک (Text Message Forwarding) روی iPhone شما.
 
+## تصاویر صفحه
+
+| ساخت قاعده از یک پیامک نمونه | امتحان |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="ساخت قاعده از یک پیامک نمونه"> | <img src="images/try-it.png" width="400" alt="امتحان"> |
+| **عمومی** | **کلیدواژه‌ها** |
+| <img src="images/settings-general.png" width="400" alt="عمومی"> | <img src="images/keywords.png" width="400" alt="کلیدواژه‌ها"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="زبان"><br><em>زبان</em></p>
+
 ## نصب
 
 ### دانلود

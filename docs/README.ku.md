@@ -20,6 +20,16 @@ CodeCatcher belaş û çavkaniya vekirî ye. Wekî projeyeke kesane hatiye çêk
 
 **Pêdivî:** macOS 15 an nûtir, ji bo avakirinê Xcode 16 an nûtir, û li ser iPhone’a te Veguhastina Peyamên Nivîsê (Text Message Forwarding).
 
+## Wêneyên ekranê
+
+| Ji SMS’eke nimûne rêgezekê çêke | Biceribîne |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="Ji SMS’eke nimûne rêgezekê çêke"> | <img src="images/try-it.png" width="400" alt="Biceribîne"> |
+| **Giştî** | **Peyvên sereke** |
+| <img src="images/settings-general.png" width="400" alt="Giştî"> | <img src="images/keywords.png" width="400" alt="Peyvên sereke"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="Ziman"><br><em>Ziman</em></p>
+
 ## Sazkirin
 
 ### Daxistin

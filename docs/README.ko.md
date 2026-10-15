@@ -20,6 +20,16 @@ CodeCatcher는 무료 오픈 소스입니다. 개인 프로젝트로 만들어�
 
 **요구 사항:** macOS 15 이상, 빌드하려면 Xcode 16 이상, iPhone의 문자 메시지 전달.
 
+## 스크린샷
+
+| 샘플 SMS로 규칙 생성 | 테스트 |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="샘플 SMS로 규칙 생성"> | <img src="images/try-it.png" width="400" alt="테스트"> |
+| **일반** | **키워드** |
+| <img src="images/settings-general.png" width="400" alt="일반"> | <img src="images/keywords.png" width="400" alt="키워드"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="언어"><br><em>언어</em></p>
+
 ## 설치
 
 ### 다운로드

@@ -20,6 +20,16 @@ CodeCatcher is free and open source. It was built as a personal project and is p
 
 **Requirements:** macOS 15 or later, Xcode 16 or later to build, and Text Message Forwarding on your iPhone.
 
+## Screenshots
+
+| Create a rule from a sample SMS | Try It |
+|:---:|:---:|
+| <img src="docs/images/rule-builder.png" width="400" alt="Create a rule from a sample SMS"> | <img src="docs/images/try-it.png" width="400" alt="Try It"> |
+| **General** | **Keywords** |
+| <img src="docs/images/settings-general.png" width="400" alt="General"> | <img src="docs/images/keywords.png" width="400" alt="Keywords"> |
+
+<p align="center"><img src="docs/images/language-picker.png" width="260" alt="Language"><br><em>Language</em></p>
+
 ## Installation
 
 ### Download

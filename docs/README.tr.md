@@ -20,6 +20,16 @@ CodeCatcher ücretsiz ve açık kaynaktır. Kişisel bir proje olarak geliştiri
 
 **Gereksinimler:** macOS 15 veya üstü, derlemek için Xcode 16 veya üstü ve iPhone'da Metin Mesajı Yönlendirme.
 
+## Ekran görüntüleri
+
+| Örnek SMS'ten kural oluştur | Dene |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="Örnek SMS'ten kural oluştur"> | <img src="images/try-it.png" width="400" alt="Dene"> |
+| **Genel** | **Anahtar Kelimeler** |
+| <img src="images/settings-general.png" width="400" alt="Genel"> | <img src="images/keywords.png" width="400" alt="Anahtar Kelimeler"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="Dil"><br><em>Dil</em></p>
+
 ## Kurulum
 
 ### İndirme

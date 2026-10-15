@@ -20,6 +20,16 @@ CodeCatcherは無料のオープンソースソフトウェアです。個人プ
 
 **動作環境：** macOS 15以降、ビルドにはXcode 16以降、iPhoneのSMS/MMS転送。
 
+## スクリーンショット
+
+| サンプルSMSからルールを作成 | テスト |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="サンプルSMSからルールを作成"> | <img src="images/try-it.png" width="400" alt="テスト"> |
+| **一般** | **キーワード** |
+| <img src="images/settings-general.png" width="400" alt="一般"> | <img src="images/keywords.png" width="400" alt="キーワード"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="言語"><br><em>言語</em></p>
+
 ## インストール
 
 ### ダウンロード

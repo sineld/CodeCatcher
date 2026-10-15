@@ -20,6 +20,16 @@ CodeCatcher مجاني ومفتوح المصدر. طُوِّر كمشروع شخ
 
 **المتطلبات:** macOS 15 أو أحدث، وXcode 16 أو أحدث للبناء، وميزة إعادة توجيه الرسائل النصية على iPhone.
 
+## لقطات الشاشة
+
+| إنشاء قاعدة من نموذج رسالة SMS | تجربة |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="إنشاء قاعدة من نموذج رسالة SMS"> | <img src="images/try-it.png" width="400" alt="تجربة"> |
+| **عام** | **الكلمات المفتاحية** |
+| <img src="images/settings-general.png" width="400" alt="عام"> | <img src="images/keywords.png" width="400" alt="الكلمات المفتاحية"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="اللغة"><br><em>اللغة</em></p>
+
 ## التثبيت
 
 ### التنزيل

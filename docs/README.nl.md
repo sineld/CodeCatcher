@@ -20,6 +20,16 @@ CodeCatcher is gratis en open source. Het is gemaakt als persoonlijk project en 
 
 **Vereisten:** macOS 15 of nieuwer, Xcode 16 of nieuwer om te bouwen, en het doorsturen van tekstberichten op je iPhone.
 
+## Schermafbeeldingen
+
+| Maak een regel op basis van een voorbeeld-sms | Probeer |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="Maak een regel op basis van een voorbeeld-sms"> | <img src="images/try-it.png" width="400" alt="Probeer"> |
+| **Algemeen** | **Trefwoorden** |
+| <img src="images/settings-general.png" width="400" alt="Algemeen"> | <img src="images/keywords.png" width="400" alt="Trefwoorden"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="Taal"><br><em>Taal</em></p>
+
 ## Installatie
 
 ### Downloaden

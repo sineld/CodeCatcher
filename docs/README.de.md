@@ -20,6 +20,16 @@ CodeCatcher ist kostenlos und Open Source. Es entstand als persönliches Projekt
 
 **Voraussetzungen:** macOS 15 oder neuer, Xcode 16 oder neuer zum Bauen und die SMS-Weiterleitung auf deinem iPhone.
 
+## Bildschirmfotos
+
+| Regel aus einer Beispiel-SMS erstellen | Testen |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="Regel aus einer Beispiel-SMS erstellen"> | <img src="images/try-it.png" width="400" alt="Testen"> |
+| **Allgemein** | **Schlüsselwörter** |
+| <img src="images/settings-general.png" width="400" alt="Allgemein"> | <img src="images/keywords.png" width="400" alt="Schlüsselwörter"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="Sprache"><br><em>Sprache</em></p>
+
 ## Installation
 
 ### Download

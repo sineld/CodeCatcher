@@ -20,6 +20,16 @@ CodeCatcher — бесплатное приложение с открытым и
 
 **Требования:** macOS 15 или новее, Xcode 16 или новее для сборки, а также включённая на iPhone функция «Переадресация» сообщений.
 
+## Скриншоты
+
+| Создание правила по образцу SMS | Попробовать |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="Создание правила по образцу SMS"> | <img src="images/try-it.png" width="400" alt="Попробовать"> |
+| **Основные** | **Ключевые слова** |
+| <img src="images/settings-general.png" width="400" alt="Основные"> | <img src="images/keywords.png" width="400" alt="Ключевые слова"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="Язык"><br><em>Язык</em></p>
+
 ## Установка
 
 ### Загрузка

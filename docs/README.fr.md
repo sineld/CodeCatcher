@@ -20,6 +20,16 @@ CodeCatcher est gratuit et open source. Il a été conçu comme un projet person
 
 **Configuration requise :** macOS 15 ou ultérieur, Xcode 16 ou ultérieur pour compiler, et le transfert de SMS activé sur votre iPhone.
 
+## Captures d'écran
+
+| Créer une règle à partir d’un SMS d’exemple | Essayer |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="Créer une règle à partir d’un SMS d’exemple"> | <img src="images/try-it.png" width="400" alt="Essayer"> |
+| **Général** | **Mots-clés** |
+| <img src="images/settings-general.png" width="400" alt="Général"> | <img src="images/keywords.png" width="400" alt="Mots-clés"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="Langue"><br><em>Langue</em></p>
+
 ## Installation
 
 ### Téléchargement

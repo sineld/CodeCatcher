@@ -20,6 +20,16 @@ CodeCatcher pulsuz və açıq mənbəlidir. Şəxsi layihə kimi hazırlanıb v�
 
 **Tələblər:** macOS 15 və ya daha yeni versiya, qurmaq üçün Xcode 16 və ya daha yeni versiya, iPhone-da isə Mətn Mesajlarının Yönləndirilməsi (Text Message Forwarding).
 
+## Ekran görüntüləri
+
+| Nümunə SMS-dən qayda yaradın | Sınaq |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="Nümunə SMS-dən qayda yaradın"> | <img src="images/try-it.png" width="400" alt="Sınaq"> |
+| **Ümumi** | **Açar sözlər** |
+| <img src="images/settings-general.png" width="400" alt="Ümumi"> | <img src="images/keywords.png" width="400" alt="Açar sözlər"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="Dil"><br><em>Dil</em></p>
+
 ## Quraşdırma
 
 ### Endirmə

@@ -20,6 +20,16 @@ CodeCatcher 免费且开源。它作为个人项目开发，按原样提供，�
 
 **系统要求：** macOS 15 或更高版本，构建需要 Xcode 16 或更高版本，并在 iPhone 上开启短信转发。
 
+## 截图
+
+| 根据短信样本创建规则 | 测试 |
+|:---:|:---:|
+| <img src="images/rule-builder.png" width="400" alt="根据短信样本创建规则"> | <img src="images/try-it.png" width="400" alt="测试"> |
+| **通用** | **关键词** |
+| <img src="images/settings-general.png" width="400" alt="通用"> | <img src="images/keywords.png" width="400" alt="关键词"> |
+
+<p align="center"><img src="images/language-picker.png" width="260" alt="语言"><br><em>语言</em></p>
+
 ## 安装
 
 ### 下载

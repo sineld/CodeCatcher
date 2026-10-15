@@ -9,6 +9,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Changed
 - README: installation split into Download, Build from source and After installing, with steps for opening an app that isn't notarized.
+- README: screenshots of the rule builder, Try It, General and Keywords tabs and the language picker.
 
 ## [1.3.0] - 2026-10-15
 
