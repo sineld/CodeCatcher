@@ -1,8 +1,8 @@
 #!/bin/bash
-# Kullanım: scripts/build-app.sh [--install | --dmg]
+# Kullanım: scripts/build-app.sh [--install]
 # build/CodeCatcher.app üretir (Apple silicon + Intel, universal).
 #   --install  ~/Applications'a kopyalayıp başlatır
-#   --dmg      sürüm için build/CodeCatcher-<sürüm>.dmg üretir
+#   DMG için: scripts/release.sh (Developer ID imzası ve Apple onayı)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -20,7 +20,10 @@ cp -R Resources/Localizations/*.lproj "$APP/Contents/Resources/"
 # Tam Disk Erişimi izni imzaya bağlıdır: ad-hoc imzada her derlemeden sonra izin yeniden verilmeli.
 IDENTITY="${CODESIGN_IDENTITY:-CodeCatcher Local}"
 if security find-identity -p codesigning | grep -q "\"$IDENTITY\""; then
-    codesign --force --sign "$IDENTITY" "$APP"
+    # Notarization requires the hardened runtime and a secure timestamp.
+    FLAGS=()
+    if [[ "$IDENTITY" == "Developer ID"* ]]; then FLAGS=(--options runtime --timestamp); fi
+    codesign --force ${FLAGS[@]+"${FLAGS[@]}"} --sign "$IDENTITY" "$APP"
 else
     echo "uyarı: '$IDENTITY' sertifikası yok, ad-hoc imzalanıyor" >&2
     codesign --force --sign - "$APP"
@@ -35,16 +38,5 @@ case "${1:-}" in
     cp -R "$APP" ~/Applications/
     for _ in 1 2 3; do open ~/Applications/CodeCatcher.app && break; sleep 1; done # LaunchServices bazen -600 verir
     echo "kuruldu: ~/Applications/CodeCatcher.app"
-    ;;
---dmg)
-    VERSION=$(plutil -extract CFBundleShortVersionString raw Resources/Info.plist)
-    DMG="build/CodeCatcher-$VERSION.dmg"
-    STAGE=$(mktemp -d)
-    trap 'rm -rf "$STAGE"' EXIT
-    cp -R "$APP" "$STAGE/"
-    ln -s /Applications "$STAGE/Applications" # sürükle-bırak kurulum
-    rm -f "$DMG"
-    hdiutil create -volname CodeCatcher -srcfolder "$STAGE" -format UDZO -ov "$DMG" >/dev/null
-    echo "hazır: $DMG (sha256 $(shasum -a 256 "$DMG" | cut -d' ' -f1))"
     ;;
 esac

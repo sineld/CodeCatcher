@@ -36,11 +36,7 @@ CodeCatcher 免费且开源。它作为个人项目开发，按原样提供，�
 
 1. 从[最新版本](https://github.com/sineld/CodeCatcher/releases/latest)下载 `.dmg` 文件。这是一个通用 App，同时支持搭载 Apple 芯片和 Intel 处理器的 Mac。
 2. 打开 DMG，将 CodeCatcher 拖到应用程序文件夹。
-3. 此 App 未经过 Apple 公证，因此 macOS 会在首次打开时阻止它。请先尝试打开一次，然后前往系统设置 → 隐私与安全性，点按**仍要打开**。也可以在终端中运行：
-
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
-   ```
+3. 此 App 已使用 Developer ID 签名并经过 Apple 公证，因此打开时不会出现任何警告。
 
 ### 从源代码构建
 
@@ -52,7 +48,7 @@ scripts/build-app.sh --install   # builds, installs to ~/Applications and launch
 
 ### 安装之后
 
-1. **完全磁盘访问权限：** 系统设置 → 隐私与安全性 → 完全磁盘访问权限 → CodeCatcher。没有此权限就无法读取 `~/Library/Messages/chat.db`，菜单栏会显示 ⚠︎ 图标。
+1. **完全磁盘访问权限：** 系统设置 → 隐私与安全性 → 完全磁盘访问权限 → CodeCatcher。没有此权限就无法读取 `~/Library/Messages/chat.db`，菜单栏会显示 ⚠︎ 图标。发布版本始终使用同一个 Developer ID 签名，因此更新后权限仍然保留。如果从 1.3 或更早版本更新，请将 CodeCatcher 从列表中移除一次，然后重新添加。
 2. 在 iPhone 上，前往设置 → 信息 → 短信转发，开启这台 Mac。
 
 ## 语言
@@ -114,8 +110,9 @@ GitHub Actions 会在每次推送和拉取请求时运行 `swift test`。
 ```bash
 swift test                          # tests
 scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
-scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
+scripts/release.sh                  # signed and notarized build/CodeCatcher-<version>.dmg (Developer ID)
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
+xcrun swift scripts/make-dmg-background.swift # regenerates Resources/dmg-background.png
 ```
 
 ```

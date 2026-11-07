@@ -36,11 +36,7 @@ CodeCatcher ücretsiz ve açık kaynaktır. Kişisel bir proje olarak geliştiri
 
 1. `.dmg` dosyasını [son sürümden](https://github.com/sineld/CodeCatcher/releases/latest) indir. Hem Apple Silicon hem de Intel işlemcili Mac'lerde çalışan evrensel bir uygulamadır.
 2. DMG'yi aç ve CodeCatcher'ı Uygulamalar klasörüne sürükle.
-3. Uygulama Apple tarafından onaylanmadığı (notarize edilmediği) için macOS ilk açılışta onu engeller. Uygulamayı bir kez açmayı dene, ardından Sistem Ayarları → Gizlilik ve Güvenlik bölümüne gidip **Yine de Aç** düğmesine tıkla. Alternatif olarak Terminal'de şunu çalıştır:
-
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
-   ```
+3. Uygulama Developer ID ile imzalı ve Apple tarafından onaylı (notarize edilmiş) olduğu için hiçbir uyarı göstermeden açılır.
 
 ### Kaynaktan derleme
 
@@ -52,7 +48,7 @@ scripts/build-app.sh --install   # builds, installs to ~/Applications and launch
 
 ### Kurulumdan sonra
 
-1. **Tam Disk Erişimi:** Sistem Ayarları → Gizlilik ve Güvenlik → Tam Disk Erişimi → CodeCatcher. Bu izin olmadan `~/Library/Messages/chat.db` okunamaz ve menü çubuğunda ⚠︎ ikonu görünür.
+1. **Tam Disk Erişimi:** Sistem Ayarları → Gizlilik ve Güvenlik → Tam Disk Erişimi → CodeCatcher. Bu izin olmadan `~/Library/Messages/chat.db` okunamaz ve menü çubuğunda ⚠︎ ikonu görünür. Sürümler hep aynı Developer ID ile imzalandığı için izin güncellemelerden sonra da korunur. 1.3 veya daha eski bir sürümden güncelliyorsan CodeCatcher'ı listeden bir kez kaldırıp yeniden ekle.
 2. iPhone'da Ayarlar → Mesajlar → Metin Mesajı Yönlendirme bölümünden bu Mac'i aç.
 
 ## Dil
@@ -114,8 +110,9 @@ Her push ve pull request'te GitHub Actions `swift test` çalıştırır.
 ```bash
 swift test                          # tests
 scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
-scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
+scripts/release.sh                  # signed and notarized build/CodeCatcher-<version>.dmg (Developer ID)
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
+xcrun swift scripts/make-dmg-background.swift # regenerates Resources/dmg-background.png
 ```
 
 ```

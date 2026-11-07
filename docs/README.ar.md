@@ -36,11 +36,7 @@ CodeCatcher مجاني ومفتوح المصدر. طُوِّر كمشروع شخ
 
 1. نزّل ملف `.dmg` من [أحدث إصدار](https://github.com/sineld/CodeCatcher/releases/latest). إنه تطبيق عام (Universal) يعمل على أجهزة Mac بشريحة Apple silicon وأجهزة Mac بمعالج Intel.
 2. افتح ملف DMG واسحب CodeCatcher إلى مجلد التطبيقات.
-3. التطبيق غير موثَّق (notarized) من Apple، لذلك يحظره macOS في المرة الأولى. حاول فتحه مرة واحدة، ثم انتقل إلى إعدادات النظام ← الخصوصية والأمن وانقر على **فتح على أي حال**. أو بدلًا من ذلك، شغّل هذا الأمر في تطبيق الطرفية:
-
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
-   ```
+3. التطبيق موقَّع بشهادة Developer ID وموثَّق (notarized) من Apple، لذلك يُفتح دون أي تحذير.
 
 ### البناء من المصدر
 
@@ -52,7 +48,7 @@ scripts/build-app.sh --install   # builds, installs to ~/Applications and launch
 
 ### بعد التثبيت
 
-1. **الوصول الكامل إلى القرص:** إعدادات النظام ← الخصوصية والأمن ← الوصول الكامل إلى القرص ← CodeCatcher. بدونه لا يمكن قراءة `~/Library/Messages/chat.db`، ويعرض شريط القوائم أيقونة ⚠︎.
+1. **الوصول الكامل إلى القرص:** إعدادات النظام ← الخصوصية والأمن ← الوصول الكامل إلى القرص ← CodeCatcher. بدونه لا يمكن قراءة `~/Library/Messages/chat.db`، ويعرض شريط القوائم أيقونة ⚠︎. تُوقَّع الإصدارات دائمًا بشهادة Developer ID نفسها، لذلك يبقى الإذن بعد التحديثات. إذا كنت تحدّث من الإصدار 1.3 أو أقدم، فاحذف CodeCatcher من القائمة مرة واحدة ثم أضفه من جديد.
 2. على iPhone، فعّل جهاز Mac هذا من الإعدادات ← الرسائل ← إعادة توجيه الرسائل النصية.
 
 ## اللغة
@@ -114,8 +110,9 @@ scripts/build-app.sh --install   # builds, installs to ~/Applications and launch
 ```bash
 swift test                          # tests
 scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
-scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
+scripts/release.sh                  # signed and notarized build/CodeCatcher-<version>.dmg (Developer ID)
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
+xcrun swift scripts/make-dmg-background.swift # regenerates Resources/dmg-background.png
 ```
 
 ```

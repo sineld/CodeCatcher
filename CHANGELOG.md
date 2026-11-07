@@ -4,11 +4,16 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-07
+
 ### Added
-- `scripts/build-app.sh` builds a universal app (Apple silicon + Intel), and `--dmg` packages it as `build/CodeCatcher-<version>.dmg`. Releases now include the DMG.
+- Universal app for Apple silicon and Intel, distributed as a DMG with a drag-to-Applications window.
+- `scripts/release.sh` builds `build/CodeCatcher-<version>.dmg`, signed with a Developer ID and notarized by Apple. `scripts/make-dmg-background.swift` draws the DMG window background.
 
 ### Changed
-- README: installation split into Download, Build from source and After installing, with steps for opening an app that isn't notarized.
+- Releases are signed with a Developer ID and notarized, so macOS opens them without a warning, and Full Disk Access survives updates. When updating from 1.3, remove CodeCatcher from the Full Disk Access list once and add it again.
+- `scripts/build-app.sh` adds the hardened runtime when it signs with a Developer ID; its `--dmg` option is replaced by `scripts/release.sh`.
+- README: installation split into Download, Build from source and After installing.
 - README: screenshots of the rule builder, Try It, General and Keywords tabs and the language picker.
 
 ## [1.3.0] - 2026-10-15

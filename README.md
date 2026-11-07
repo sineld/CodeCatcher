@@ -36,11 +36,7 @@ CodeCatcher is free and open source. It was built as a personal project and is p
 
 1. Download the `.dmg` file from the [latest release](https://github.com/sineld/CodeCatcher/releases/latest). It is a universal app for both Apple silicon and Intel Macs.
 2. Open the DMG and drag CodeCatcher to the Applications folder.
-3. The app is not notarized by Apple, so macOS blocks it the first time. Try to open it once, then go to System Settings → Privacy & Security and click **Open Anyway**. Alternatively, run this in Terminal:
-
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
-   ```
+3. The app is signed with a Developer ID and notarized by Apple, so it opens without any warnings.
 
 ### Build from source
 
@@ -52,7 +48,7 @@ scripts/build-app.sh --install   # builds, installs to ~/Applications and launch
 
 ### After installing
 
-1. **Full Disk Access:** System Settings → Privacy & Security → Full Disk Access → CodeCatcher. Without it `~/Library/Messages/chat.db` can't be read, and the menu bar shows a ⚠︎ icon.
+1. **Full Disk Access:** System Settings → Privacy & Security → Full Disk Access → CodeCatcher. Without it `~/Library/Messages/chat.db` can't be read, and the menu bar shows a ⚠︎ icon. Releases are always signed with the same Developer ID, so the permission survives updates. If you're updating from version 1.3 or earlier, remove CodeCatcher from the list once and add it again.
 2. On your iPhone, turn on this Mac under Settings → Messages → Text Message Forwarding.
 
 ## Language
@@ -114,8 +110,9 @@ GitHub Actions runs `swift test` on every push and pull request.
 ```bash
 swift test                          # tests
 scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
-scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
+scripts/release.sh                  # signed and notarized build/CodeCatcher-<version>.dmg (Developer ID)
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
+xcrun swift scripts/make-dmg-background.swift # regenerates Resources/dmg-background.png
 ```
 
 ```

@@ -13,6 +13,8 @@ swift test                                   # all tests; must pass before any c
 swift build                                  # debug build
 scripts/build-app.sh                         # release build wrapped as build/CodeCatcher.app
 scripts/build-app.sh --install               # also installs to ~/Applications and launches
+scripts/release.sh                           # Developer ID signed, notarized build/CodeCatcher-<version>.dmg
+xcrun swift scripts/make-dmg-background.swift # regenerates Resources/dmg-background.png
 xcrun swift scripts/make-icon.swift          # regenerates Resources/AppIcon.icns
 ~/Applications/CodeCatcher.app/Contents/MacOS/CodeCatcher --dry-run 100   # scan recent messages, copy nothing
 ```

@@ -36,11 +36,7 @@ CodeCatcher belaş û çavkaniya vekirî ye. Wekî projeyeke kesane hatiye çêk
 
 1. Pelê `.dmg` ji [weşana herî dawî](https://github.com/sineld/CodeCatcher/releases/latest) daxe. Ew sepaneke gerdûnî (universal) ye, hem ji bo Mac’ên bi Apple silicon û hem jî ji bo Mac’ên bi Intel.
 2. DMG’ê veke û CodeCatcher bikişîne peldanka Applications.
-3. Sepan ji aliyê Apple ve nehatiye notarîzekirin (notarized), ji ber vê yekê macOS cara yekem wê asteng dike. Carekê hewl bide ku wê vekî, paşê here Mîhengên Pergalê (System Settings) → Nepenî û Ewlehî (Privacy & Security) û li **Dîsa jî Veke** (Open Anyway) bitikîne. Wekî din, tu dikarî vê fermanê di Termînalê de bixebitînî:
-
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/CodeCatcher.app
-   ```
+3. Sepan bi Developer ID hatiye îmzekirin û ji aliyê Apple ve hatiye notarîzekirin (notarized), ji ber vê yekê bê hişyarî vedibe.
 
 ### Ji koda çavkaniyê avakirin
 
@@ -52,7 +48,7 @@ scripts/build-app.sh --install   # builds, installs to ~/Applications and launch
 
 ### Piştî sazkirinê
 
-1. **Gihîştina Tevahiya Dîskê:** Mîhengên Pergalê (System Settings) → Nepenî û Ewlehî (Privacy & Security) → Gihîştina Tevahiya Dîskê (Full Disk Access) → CodeCatcher. Bêyî wê `~/Library/Messages/chat.db` nayê xwendin, û di darika menuyê de nîşaneya ⚠︎ xuya dike.
+1. **Gihîştina Tevahiya Dîskê:** Mîhengên Pergalê (System Settings) → Nepenî û Ewlehî (Privacy & Security) → Gihîştina Tevahiya Dîskê (Full Disk Access) → CodeCatcher. Bêyî wê `~/Library/Messages/chat.db` nayê xwendin, û di darika menuyê de nîşaneya ⚠︎ xuya dike. Weşan her tim bi heman Developer ID têne îmzekirin, ji ber vê yekê destûr piştî nûkirinan jî dimîne. Heke tu ji guhertoya 1.3 an kevntir nû dikî, CodeCatcher carekê ji lîsteyê rake û dîsa lê zêde bike.
 2. Li ser iPhone’a xwe, di bin Mîheng (Settings) → Peyam (Messages) → Veguhastina Peyamên Nivîsê (Text Message Forwarding) de vê Mac’ê vêxe.
 
 ## Ziman
@@ -114,8 +110,9 @@ GitHub Actions di her push û pull request de `swift test` dixebitîne.
 ```bash
 swift test                          # tests
 scripts/build-app.sh                # build/CodeCatcher.app (universal: arm64 + x86_64)
-scripts/build-app.sh --dmg          # build/CodeCatcher-<version>.dmg for a release
+scripts/release.sh                  # signed and notarized build/CodeCatcher-<version>.dmg (Developer ID)
 xcrun swift scripts/make-icon.swift # regenerates Resources/AppIcon.icns
+xcrun swift scripts/make-dmg-background.swift # regenerates Resources/dmg-background.png
 ```
 
 ```
